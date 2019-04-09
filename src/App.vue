@@ -1,8 +1,7 @@
 <template>
   <div id="app">
-    <Todos v-bind:todos="todos"/>
+    <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo"/>
   </div>
-  <!-- get our todos into the todos component -->
 </template>
 
 
@@ -34,6 +33,14 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    deleteTodo(id) {
+      console.log("hit");
+
+      // basically loops thru an array using a condition and returns every iteration that meets condition
+      this.todos = this.todos.filter(todo => todo.id !== id);
+    }
   }
 };
 </script>
