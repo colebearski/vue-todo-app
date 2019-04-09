@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Todos/>
+    <Todos v-bind:todos="todos"/>
   </div>
   <!-- get our todos into the todos component -->
 </template>
@@ -25,7 +25,7 @@ export default {
         {
           id: 2,
           title: "Put this wicked app on GH",
-          completed: false
+          completed: true
         },
         {
           id: 3,
