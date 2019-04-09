@@ -8,6 +8,8 @@
 
 
 <script>
+import axios from "axios";
+
 import Todos from "./components/Todos";
 import AddTodo from "./components/AddTodo";
 import Header from "./components/layout/Header";
@@ -21,35 +23,36 @@ export default {
   },
   data() {
     return {
-      todos: [
-        {
-          id: 1,
-          title: "Make Vue Todo app",
-          completed: false
-        },
-        {
-          id: 2,
-          title: "Put this wicked app on GH",
-          completed: false
-        },
-        {
-          id: 3,
-          title: "Be awesome",
-          completed: false
-        }
-      ]
+      todos: []
     };
   },
   methods: {
     deleteTodo(id) {
-      // basically loops thru an array using a condition and returns every iteration that meets condition
-      this.todos = this.todos.filter(todo => todo.id !== id);
+      axios
+        .delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+        // basically loops thru an array using a condition and returns every iteration that meets condition
+        .then(res => (this.todos = this.todos.filter(todo => todo.id !== id)))
+        .catch(err => console.log(err));
     },
 
     addTodo(newTodo) {
-      // spread operator to copy all current todos and then add a new todo
-      this.todos = [...this.todos, newTodo];
+      const { title, completed } = newTodo;
+
+      axios
+        .post("https://jsonplaceholder.typicode.com/todos", {
+          title,
+          completed
+        })
+        // spread operator to copy all current todos and then add a new todo
+        .then(res => (this.todos = [...this.todos, res.data]))
+        .catch(err => console.log(err));
     }
+  },
+  created() {
+    axios
+      .get("https://jsonplaceholder.typicode.com/todos?_limit=5")
+      .then(res => (this.todos = res.data))
+      .catch(err => console.log(err));
   }
 };
 </script>
