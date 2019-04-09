@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header/>
-    <AddTodo/>
+    <AddTodo v-on:add-todo="addTodo"/>
     <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo"/>
   </div>
 </template>
@@ -42,10 +42,13 @@ export default {
   },
   methods: {
     deleteTodo(id) {
-      console.log("hit");
-
       // basically loops thru an array using a condition and returns every iteration that meets condition
       this.todos = this.todos.filter(todo => todo.id !== id);
+    },
+
+    addTodo(newTodo) {
+      // spread operator to copy all current todos and then add a new todo
+      this.todos = [...this.todos, newTodo];
     }
   }
 };
