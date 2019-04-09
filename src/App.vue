@@ -25,7 +25,7 @@ export default {
         {
           id: 2,
           title: "Put this wicked app on GH",
-          completed: true
+          completed: false
         },
         {
           id: 3,
